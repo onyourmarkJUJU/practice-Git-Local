@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bit.vo">
+<!--	<select id="selectEmp" resultType="com.bit.vo.EmployeesVO">-->
+    <select id="selectEmp" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+        /*select
+            employee_id, first_name, last_name, email, phone_number,
+            hire_date, job_id, salary, commission_pct, manager_id, department_id
+        from employees*/
+
+        <if test="table eq 'employees'">
+            SELECT * FROM EMPLOYEES WHERE COMMISSION_PCT IS NOT NULL
+        </if>
+        <if test="table eq 'departments'">
+            SELECT * FROM DEPARTMENTS WHERE MANAGER_ID IS NOT NULL
+        </if>
+        <if test="table eq 'salgrades'">
+            SELECT *
+            FROM salgrades
+        </if>
+    </select>
+
+    <select id="getIdCheck" parameterType="java.lang.String"
+            resultType="java.lang.String">
+        SELECT PASSWORD FROM ADMINMEMBER
+        WHERE ID=#{VALUE}
+    </select>
+
+    <insert id="insertBoard" parameterType="board">
+        INSERT into CRUDAPP(title, writer, password, contents, id, hit, fileName, regdate)
+        VALUES(#{title}, #{writer}, #{password}, #{contents}, #{id}, 0, #{fileName}, now())
+     </insert>
+
+    <select id="selectAll" resultType="board" parameterType="java.util.HashMap">
+        -- SELECT *
+        -- FROM CRUDAPP
+        -- ORDER BY REGDATE DESC
+        -- LIMIT 10
+
+        SELECT *
+        FROM(SELECT @rownum:=@rownum+1 rownumber, CRUDAPP.*
+        FROM CRUDAPP
+        WHERE (@rownum:=0)=0
+        <if test="query != 'empty'"> AND ${query} LIKE CONCAT('%',#{data},'%')</if>
+        order by no asc)a
+        WHERE rownumber between #{startnum} and #{endnum}
+    </select>
+    <select id="selectList" resultType="board">
+
+    </select>
+
+    <update id="updateHit" parameterType="java.lang.Integer">
+        UPDATE crudapp SET HIT=HIT+1
+        WHERE NO=#{VALUE}
+    </update>
+
+    <select id="selectInfo" resultType="board" parameterType="java.lang.Integer">
+        SELECT *
+        FROM crudapp
+        WHERE NO=#{VALUE}
+    </select>
+
+    <select id="totalCount" resultType="int" parameterType="java.util.HashMap">
+        select count(*)
+        from crudapp
+        <choose>
+            <when test="query != 'empty'">
+                <where>
+                    ${query} LIKE CONCAT('%', #{data}, '%')
+                </where>
+            </when>
+        </choose>
+    </select>
+
+<!--    [{employee_id:1234}, {employee_id:5678}, {employee_id:0000}]-->
+</mapper>
+
