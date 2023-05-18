@@ -35,12 +35,9 @@
                 <h1 class="title">게시판 상세보기</h1>
                 <div class="btnSet clfix mgb15">
 						<span class="fr">
-                            <span class="button" id="check"><a href="${pageContext.request.contextPath}/jsp/passCheck.jsp">수정</a></span>
-							<span class="button"><a href="${pageContext.request.contextPath}/jsp/passCheck.jsp">삭제</a></span>
-                            <span class="button"><a href="${pageContext.request.contextPath}/jsp/list.jsp">목록</a></span>
-                            <%--<span class="button"> <a href="">수정</a></span>
-							<span class="button"><a href="">삭제</a></span>
-							<span class="button"><a href="">목록</a></span>--%>
+                            <span class="button" id="check"><a href="${pageContext.request.contextPath}/jsp/passCheck.jsp?job=modify">수정</a></span>
+							<span class="button" ><a href="${pageContext.request.contextPath}/jsp/passCheck.jsp?job=delete">삭제</a></span>
+                            <span class="button"><a href="${pageContext.request.contextPath}/listSelect.do?cmd=listSelect&page=1">목록</a></span>
 						</span>
                 </div>
                 <table class="bbsList">

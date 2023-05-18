@@ -43,7 +43,7 @@
 
 </head>
 <body>
-<form name="login" method="post" action="#">
+<form name="login" method="post" action="${pageContext.request.contextPath}/passSelect.do?cmd=passSelect">
     <div id="loginWrapper">
         <div class="loginForm">
             <fieldset>
@@ -56,10 +56,6 @@
                 <div class="btn">
                     <img id="btnSubmit" src="${pageContext.request.contextPath}/img/button/btn_login.gif" alt="LOGIN"
                          title="LOGIN"/>
-                </div>
-
-                <div class="saveId"><input type="checkbox" id="checker" name="checker"/>
-                    <img src="${pageContext.request.contextPath}/img/common/save_id.gif" alt="아이디 저장"/>
                 </div>
             </fieldset>
         </div>
